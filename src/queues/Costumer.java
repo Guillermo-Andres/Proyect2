@@ -6,13 +6,13 @@ package queues;
  * @author pedroirivera-vega
  *
  */
-public class Job {
+public class Costumer {
 	
 	   private int pid;            // id of this job
 	   private int arrivalTime;    // arrival time of this job
 	   private int remainingTime;  // remaining service time for this job
 	   private int departureTime;  // time when the service for this job is completed
-	   public Job(int id, int at, int rt) { 
+	   public Costumer(int id, int at, int rt) { 
 		pid = id; 
 		arrivalTime = at; 
 		remainingTime = rt; 
