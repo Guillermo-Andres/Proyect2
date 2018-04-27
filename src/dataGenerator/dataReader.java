@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import interfaces.Queue;
+import queues.Job;
+import queues.SLLQueue;
+
 public class dataReader {
 
-	public void readData() throws FileNotFoundException{
+	public Queue readData() throws FileNotFoundException{
 		
 			
-			 //  inputQueue=new SLLQueue<>();
-			  // processingQueue=new SLLQueue<>();
+			  SLLQueue inputQueue=new SLLQueue<>();
+			  SLLQueue processingQueue=new SLLQueue<>();
 		
 		Scanner reader = new Scanner(new File ("input.csv"));
 		int i=1;
@@ -18,11 +22,12 @@ public class dataReader {
 		
 			String myString = reader.nextLine();
 			String[] stringArray=myString.split(" ");
-			//inputQueue.enqueue(new Job (i, (int)Integer.parseInt(stringArray[0]),(int) Integer.parseInt(stringArray[1])));
+			inputQueue.enqueue(new Job (i, (int)Integer.parseInt(stringArray[0]),(int) Integer.parseInt(stringArray[1])));
 			i++;
 		
 		}
 		reader.close();
+		return inputQueue;
 	
 	}
 }
