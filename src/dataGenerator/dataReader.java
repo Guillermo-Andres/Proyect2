@@ -5,7 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import interfaces.Queue;
-import queues.Job;
+import queues.Costumer;
+
 import queues.SLLQueue;
 
 public class dataReader {
@@ -22,7 +23,7 @@ public class dataReader {
 		
 			String myString = reader.nextLine();
 			String[] stringArray=myString.split(" ");
-			inputQueue.enqueue(new Job (i, (int)Integer.parseInt(stringArray[0]),(int) Integer.parseInt(stringArray[1])));
+			inputQueue.enqueue(new Costumer (i, (int)Integer.parseInt(stringArray[0]),(int) Integer.parseInt(stringArray[1])));
 			i++;
 		
 		}
