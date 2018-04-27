@@ -35,16 +35,15 @@ public class SLMSPolicy {
 					s = new Server(cs);
 					s.process();
 					processing.add(cs);
+					if (s.getCurrent().getRemainingTime() == 0) 
+						s.reset();
 				}
 			}
-			for (Server s : servers) {
-				if (s.getCurrent().getRemainingTime() == 0) 
-					s.reset();
-			}
-			for (Costumer c : processing) {
-				if (c.getRemainingTime() == 0) {
-					c.setDepartureTime(time);
-					completedServices.add(c);
+			for (int i = 0; i < processing.size(); i++) {
+				if (processing.get(i).getRemainingTime() == 0) {
+					processing.get(i).setDepartureTime(time);
+					completedServices.add(processing.get(i));
+					processing.remove(i);
 				}
 			}
 			time++;
