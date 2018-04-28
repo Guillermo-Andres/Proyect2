@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import interfaces.Queue;
+
 import queues.Costumer;
 
 import queues.SLLQueue;
@@ -13,29 +14,29 @@ import queues.SLLQueue;
 public class dataReader {
 	private String parentDirectory;
 	Queue[] inputQueues;
-	
+
 	public dataReader() throws FileNotFoundException {
 		parentDirectory = "inputFiles"; 
-		
+
 	}
 
 	public Queue[] readData() throws FileNotFoundException{
-		
-		
+		inputQueues = new SLLQueue [15];
 
-				inputQueues = new SLLQueue [40];
+		for (int i=1; i<3; i++) { 
+			inputQueues[i-1] = new SLLQueue<Costumer>();
+			String fileName = "data_" + i  + ".txt"; 
+			Scanner inputFile = new Scanner(new File(parentDirectory, fileName)); 
 
-				for (int i=0; i<40; i++) { 
-					
-						
-						String fileName = "data_" + i  + ".txt"; 
-						Scanner inputFile = new Scanner(new File(parentDirectory, fileName)); 
-						ArrayList<Integer> fileContent = new ArrayList<>(); 
-					while (inputFile.hasNext())
-		                        inputQueues[i].enqueue(new Costumer(1, inputFile.nextInt(), inputFile.nextInt()));					
-						inputFile.close();
-						
-				}	
-				return inputQueues; 
+			while (inputFile.hasNext()) {
+				String data = inputFile.nextLine();
+				String[] dataArr = data.split(" ");
+				inputQueues[i-1].enqueue(new Costumer(1, Integer.parseInt(dataArr[0]), Integer.parseInt(dataArr[1])));
+
 			}
+
+
+		}
+		return inputQueues; 
+	}
 }
