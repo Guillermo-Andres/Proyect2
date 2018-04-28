@@ -13,14 +13,14 @@ import queues.SLLQueue;
 
 public class dataReader {
 	private String parentDirectory;
-	Queue[] inputQueues;
+	Queue<Costumer>[] inputQueues;
 
 	public dataReader() throws FileNotFoundException {
 		parentDirectory = "inputFiles"; 
 
 	}
 
-	public Queue[] readData() throws FileNotFoundException{
+	public Queue<Costumer>[] readData() throws FileNotFoundException{
 		inputQueues = new SLLQueue [15];
 
 		for (int i=1; i<3; i++) { 

@@ -12,6 +12,7 @@ public class Costumer {
 	   private int arrivalTime;    // arrival time of this job
 	   private int remainingTime;  // remaining service time for this job
 	   private int departureTime;  // time when the service for this job is completed
+	   
 	   public Costumer(int id, int at, int rt) { 
 		pid = id; 
 		arrivalTime = at; 

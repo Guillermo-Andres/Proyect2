@@ -11,7 +11,7 @@ import queues.Server;
 public class SLMSPolicy {
 
 	private Queue<Costumer> inputQueue;
-	private Queue[] inputQueues;
+	private Queue<Costumer>[] inputQueues;
 	private ArrayList<Costumer> processing, completedServices;
 	private int time;
 	//private dataReader dr;
@@ -28,27 +28,46 @@ public class SLMSPolicy {
 	}
 
 	public void processing(int serversQuantity) {
-		for(int p = 0; p<inputQueues.length; p++) {
-			inputQueue=inputQueues[p];
-			ArrayList<Server> servers = new ArrayList<>(serversQuantity);
+		Server[] servers = new Server [serversQuantity];
+		
+		Costumer currentCustomer;
+		Server currentServer = servers[0];
+
+		for(int p = 0; p < inputQueues.length; p++) {
+			inputQueue = inputQueues[p];
+
 			while (!inputQueue.isEmpty() || !processing.isEmpty()) {
-				for (Server s : servers) {
-					if (time == inputQueue.first().getArrivalTime() && s.isAvailable()) {
-						Costumer cs = inputQueue.dequeue();
-						s = new Server(cs);
-						s.process();
-						processing.add(cs);
-						if (s.getCurrent().getRemainingTime() == 0) 
-							s.reset();
+				
+				if (!processing.isEmpty()) {
+					currentServer.process();
+					System.out.println("Processing!");
+					if (currentServer.getCurrent().getRemainingTime() == 0) {
+						currentServer.getCurrent().setDepartureTime(time);
+						completedServices.add(currentServer.getCurrent());
+						processing.remove(currentServer.getCurrent());
+						currentServer.setAvailability(true);
 					}
 				}
-				for (int i = 0; i < processing.size(); i++) {
-					if (processing.get(i).getRemainingTime() == 0) {
-						processing.get(i).setDepartureTime(time);
-						completedServices.add(processing.get(i));
-						processing.remove(i);
-					}
-				}
+				
+				if (!inputQueue.isEmpty() && inputQueue.first().getArrivalTime() == time) {
+					currentCustomer = inputQueue.dequeue();
+					for (int i = 0; i < servers.length; i++) {
+						servers[i] = new Server();
+						if (servers[i].getAvailability()) {
+							currentServer = servers[i];
+							currentServer.setCurrent(currentCustomer);
+							currentServer.setAvailability(false);
+							processing.add(currentServer.getCurrent());
+						}
+						if (currentServer.getCurrent().getRemainingTime() == 0) {
+							currentServer.getCurrent().setDepartureTime(time);
+							completedServices.add(currentServer.getCurrent());
+							processing.remove(currentServer.getCurrent());
+							currentServer.setAvailability(true);
+						}
+					}	
+				}		
+				
 				time++;
 
 			}
