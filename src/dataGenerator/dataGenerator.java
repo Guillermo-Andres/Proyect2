@@ -10,7 +10,7 @@ public class dataGenerator {
 	public static void main (String[] args) throws FileNotFoundException{
 		String directory = "inputFiles"; // folder that contains the files
 		Random r= new Random();
-		int genF= r.nextInt(150);
+		int genF=40;
 		
 		PrintWriter pFile=new PrintWriter(new File(directory, "datafiles.txt"));
 		

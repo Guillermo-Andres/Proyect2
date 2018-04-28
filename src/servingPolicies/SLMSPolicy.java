@@ -11,13 +11,14 @@ import queues.Server;
 public class SLMSPolicy {
 
 	private Queue<Costumer> inputQueue;
+	private Queue[] inputQueues;
 	private ArrayList<Costumer> processing, completedServices;
 	private int time;
 	private dataReader dr;
 	
 	public SLMSPolicy() {
 		try {
-			inputQueue = dr.readData();
+			inputQueues = dr.readData();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -27,6 +28,9 @@ public class SLMSPolicy {
 	}
 	
 	public void processing(int serversQuantity) {
+		for(int p = 0; p<inputQueues.length; p++) {
+			inputQueue=inputQueues[p];
+		}
 		ArrayList<Server> servers = new ArrayList<>(serversQuantity);
 		while (!inputQueue.isEmpty() || !processing.isEmpty()) {
 			for (Server s : servers) {
